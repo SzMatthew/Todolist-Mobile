@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
 import variables from './styles/Variables';
 
-const Todo = () => {
+const Todo = ({priority, text, done}) => {
   return (
     <View style={styles.todoWrapper}>
       <View style={styles.icon}></View>
-      <Text style={styles.title}>Todo</Text>
+      <Text style={styles.title}>{text}</Text>
     </View>
   );
 };
@@ -15,8 +15,6 @@ const styles = StyleSheet.create({
   todoWrapper: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: variables.colors.lightest_grey,
     padding: 5
   },
   title: {
@@ -30,7 +28,8 @@ const styles = StyleSheet.create({
     height: 22,
     borderRadius: 7,
     borderColor: variables.colors.red,
-    borderWidth: 2
+    borderWidth: 2,
+    marginVertical: 3
   }
 });
 

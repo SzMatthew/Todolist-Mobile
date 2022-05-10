@@ -8,9 +8,6 @@ const todoListsReducer = (state, action) => {
     case 'SET_TODOLISTS': {
       return { todoLists: action.payload };
     }
-    case 'LOAD_TODOLISTS': {
-      return { todoLists: action.payload };
-    }
     default: {
       throw new Error(`Unsupported action type: ${action.type}`);
     }
@@ -39,7 +36,7 @@ const useTodoLists = () => {
 
   const loadTodoLists = async () => {
     const todoLists = await ApiCalls.getTodoLists();
-    dispatch({type: 'LOAD_TODOLISTS', payload: todoLists});
+    dispatch({type: 'SET_TODOLISTS', payload: todoLists});
   };
 
   return {
