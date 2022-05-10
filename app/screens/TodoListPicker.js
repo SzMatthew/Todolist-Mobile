@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import variables from './styles/Variables';
+import { useTodoLists } from '../contexts/todolist-context';
 
 
 const TodoListPicker = ({ setTodoListPickerOpen }) => {
+  const {state: {todoLists}} = useTodoLists();
+
   return (
     <SafeAreaView style={styles.todoListWrapper}>
       <ScrollView style={styles.scrollView}>
-        <Text style={styles.text}>TodoListPicker</Text>
+        <View style={styles.todoListLabelWrapper}>
+          <Text style={styles.text}>Todo Lists</Text>
+        </View>
         <AntDesign style={styles.closeIcon} name="close" size={24} color="white" onPress={() => setTodoListPickerOpen(false)}/>
+        {
+          todoLists && todoLists.map(todoList => <Text key={todoList._id}>{todoList.title}</Text>)
+        }
       </ScrollView>
     </SafeAreaView>
   )
@@ -25,15 +33,19 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    backgroundColor: 'red',
   },
   closeIcon: {
     position: 'absolute',
     right: 10,
-    top: 10,
+    top: 20,
+  },
+  todoListLabelWrapper: {
+    display: 'flex',
+    padding: 15
   },
   text: {
-    height: 50,
+    fontSize: 27,
+    color: variables.colors.letter_color
   }
 });
 

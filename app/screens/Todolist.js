@@ -1,16 +1,27 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar,  TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import Todo from './Todo';
 import TodoListPicker from './TodoListPicker';
 import variables from './styles/Variables';
+import ApiCalls from '../utils/ApiCalls';
+import {useTodoLists} from '../contexts/todolist-context';
 
 const Todolist = () => {
   const [isTodoListPickerOpen, setTodoListPickerOpen] = useState(false);
+  const {state: {todoLists}, loadTodoLists} = useTodoLists();
+
+  useEffect(() => {
+    if (!todoLists) {
+      loadTodoLists();
+    }
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      { isTodoListPickerOpen && <TodoListPicker setTodoListPickerOpen={setTodoListPickerOpen}/> }
+      { 
+        isTodoListPickerOpen && <TodoListPicker setTodoListPickerOpen={setTodoListPickerOpen}/>
+      }
       <TouchableOpacity onPress={() => setTodoListPickerOpen(!isTodoListPickerOpen)}>
         <View style={styles.todoListsWrapper}>
           <Text style={styles.todoListsLabel}>Todo Lists</Text>
