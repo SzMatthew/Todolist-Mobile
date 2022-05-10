@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: 100,
+    marginHorizontal: 4
   },
   todoListsLabel: {
     color: variables.colors.lightest_grey,
@@ -64,13 +65,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: variables.colors.dark_grey,
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    paddingHorizontal: 25,
+    paddingHorizontal: 15,
   },
   projectTitle: {
     marginVertical: 15,
     fontSize: 25,
     color: variables.colors.letter_color,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginHorizontal: 5
   }
 });
 

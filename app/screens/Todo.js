@@ -6,7 +6,9 @@ const Todo = ({priority, text, done}) => {
   return (
     <View style={styles.todoWrapper}>
       <View style={styles.icon}></View>
-      <Text style={styles.title}>{text}</Text>
+      <View style={styles.titleWrapper}>
+        <Text style={styles.title}>{text}</Text>
+      </View>
     </View>
   );
 };
@@ -15,13 +17,18 @@ const styles = StyleSheet.create({
   todoWrapper: {
     display: 'flex',
     flexDirection: 'row',
-    padding: 5
+    padding: 5,
+  },
+  titleWrapper: {
+    flexDirection: 'row',
+    flexShrink: 1
   },
   title: {
+    flexShrink: 1,
     marginLeft: 10,
     color: variables.colors.letter_color,
     fontWeight: 'bold',
-    fontSize: 17
+    fontSize: 16,
   },
   icon: {
     width: 22,
