@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar,  TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons'; 
 import Todo from './Todo';
 import TodoListPicker from './TodoListPicker';
+import SideNavButton from './SideNavButton';
 import variables from './styles/Variables';
-import ApiCalls from '../utils/ApiCalls';
 import {useTodoLists} from '../contexts/todolist-context';
 import {useTodos} from '../contexts/todo-context';
 
@@ -30,12 +29,7 @@ const Todolist = () => {
       { 
         isTodoListPickerOpen && <TodoListPicker setTodoListPickerOpen={setTodoListPickerOpen}/>
       }
-      <TouchableOpacity onPress={() => setTodoListPickerOpen(!isTodoListPickerOpen)}>
-        <View style={styles.todoListsWrapper}>
-          <Text style={styles.todoListsLabel}>Todo Lists</Text>
-          <AntDesign name="right" size={20} color={variables.colors.lightest_grey} />
-        </View>
-      </TouchableOpacity>
+      <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={setTodoListPickerOpen}/>
       {
         todoList && <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
       }
@@ -48,19 +42,6 @@ const Todolist = () => {
 }
 
 const styles = StyleSheet.create({
-  todoListsWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: 100,
-    marginHorizontal: 4
-  },
-  todoListsLabel: {
-    color: variables.colors.lightest_grey,
-    fontWeight: 'bold',
-    fontSize: 17,
-    marginRight: 2
-  },
   container: {
     flex: 1,
     backgroundColor: variables.colors.dark_grey,
