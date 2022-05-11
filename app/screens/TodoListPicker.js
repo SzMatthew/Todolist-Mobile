@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
+import Animated, {SlideInLeft, SlideOutLeft} from 'react-native-reanimated';
 import { AntDesign } from '@expo/vector-icons';
 import variables from './styles/Variables';
 import { useTodoLists } from '../contexts/todolist-context';
@@ -9,7 +10,7 @@ const TodoListPicker = ({ setTodoListPickerOpen }) => {
   const {state: {todoLists}} = useTodoLists();
 
   return (
-    <SafeAreaView style={styles.todoListWrapper}>
+    <Animated.View style={styles.todoListWrapper} entering={SlideInLeft} exiting={SlideOutLeft}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.todoListLabelWrapper}>
           <Text style={styles.text}>Todo Lists</Text>
@@ -19,7 +20,7 @@ const TodoListPicker = ({ setTodoListPickerOpen }) => {
           todoLists && todoLists.map(todoList => <Text key={todoList._id}>{todoList.title}</Text>)
         }
       </ScrollView>
-    </SafeAreaView>
+    </Animated.View>
   )
 }
 

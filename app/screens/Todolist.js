@@ -36,7 +36,6 @@ const Todolist = () => {
       {
         todoList && todoList.todos.map(todo => <Todo key={todo._id} priority={todo.priority} text={todo.text} done={todo.done}/>)
       }
-
     </SafeAreaView>
   )
 }
