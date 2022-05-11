@@ -1,11 +1,30 @@
-import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import variables from './styles/Variables';
 
 const Todo = ({priority, text, done}) => {
+  const [priorityColor, setPriorityColor] = useState(null);
+
+  useEffect(() => {
+    switch(priority) {
+      case 1: 
+        setPriorityColor('red')
+        break;
+      case 2:
+        setPriorityColor('yellow');
+        break;
+      case 3:
+        setPriorityColor('blue');
+        break;
+      default:
+        setPriorityColor('grey');
+        break;
+    }
+  }, []);
+
   return (
     <View style={styles.todoWrapper}>
-      <View style={styles.icon}></View>
+      <View style={[styles.icon, {borderColor: variables.colors[priorityColor]}]}></View>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>{text}</Text>
       </View>
@@ -18,10 +37,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     padding: 5,
+    marginVertical: 2,
+    alignItems: 'center'
   },
   titleWrapper: {
     flexDirection: 'row',
-    flexShrink: 1
+    flexShrink: 1,
   },
   title: {
     flexShrink: 1,
@@ -34,7 +55,6 @@ const styles = StyleSheet.create({
     width: 22,
     height: 22,
     borderRadius: 7,
-    borderColor: variables.colors.red,
     borderWidth: 2,
     marginVertical: 3
   }
