@@ -26,15 +26,15 @@ const Todolist = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      { 
-        isTodoListPickerOpen && <TodoListPicker setTodoListPickerOpen={setTodoListPickerOpen}/>
-      }
       <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={setTodoListPickerOpen}/>
       {
         todoList && <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
       }
       {
         todoList && todoList.todos.map(todo => <Todo key={todo._id} priority={todo.priority} text={todo.text} done={todo.done}/>)
+      }
+      { 
+        isTodoListPickerOpen && <TodoListPicker setTodoListPickerOpen={setTodoListPickerOpen}/>
       }
     </SafeAreaView>
   )
