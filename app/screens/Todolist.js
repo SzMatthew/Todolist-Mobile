@@ -8,8 +8,7 @@ import {useTodoLists} from '../contexts/todolist-context';
 import {useTodos} from '../contexts/todo-context';
 
 const Todolist = () => {
-  const [isTodoListPickerOpen, setTodoListPickerOpen] = useState(false);
-  const {state: {todoLists}, loadTodoLists} = useTodoLists();
+  const {state: {todoLists, isTodoListPickerOpen}, loadTodoLists, setTodoListPickerOpen} = useTodoLists();
   const {state: {todoList}, loadTodoListById} = useTodos();
 
   useEffect(() => {
@@ -19,14 +18,14 @@ const Todolist = () => {
   }, []);
 
   useEffect(() => {
-    if (todoLists && todoLists[0]) {
+    if (!todoList && todoLists && todoLists[0]) {
       loadTodoListById(todoLists[0]._id)
     }
   }, [todoLists]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={setTodoListPickerOpen}/>
+      <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={() => setTodoListPickerOpen(true)}/>
       {
         todoList && <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
       }
@@ -34,7 +33,7 @@ const Todolist = () => {
         todoList && todoList.todos.map(todo => <Todo key={todo._id} priority={todo.priority} text={todo.text} done={todo.done}/>)
       }
       { 
-        isTodoListPickerOpen && <TodoListPicker setTodoListPickerOpen={setTodoListPickerOpen}/>
+        isTodoListPickerOpen && <TodoListPicker />
       }
     </SafeAreaView>
   )

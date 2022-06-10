@@ -2,22 +2,23 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
 import Animated, {SlideInLeft, SlideOutLeft} from 'react-native-reanimated';
 import { AntDesign } from '@expo/vector-icons';
+import Project from './Project';
 import variables from './styles/Variables';
 import { useTodoLists } from '../contexts/todolist-context';
 
 
-const TodoListPicker = ({ setTodoListPickerOpen }) => {
-  const {state: {todoLists}} = useTodoLists();
+const TodoListPicker = () => {
+  const {state: {todoLists}, setTodoListPickerOpen} = useTodoLists();
 
   return (
     <Animated.View style={styles.todoListWrapper} entering={SlideInLeft} exiting={SlideOutLeft}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.todoListLabelWrapper}>
-          <Text style={styles.text}>Todo Lists</Text>
+          <Text style={styles.text}>Todo Lists:</Text>
         </View>
         <AntDesign style={styles.closeIcon} name="close" size={24} color="white" onPress={() => setTodoListPickerOpen(false)}/>
         {
-          todoLists && todoLists.map(todoList => <Text key={todoList._id}>{todoList.title}</Text>)
+          todoLists && todoLists.map(todoList => <Project key={todoList._id} id={todoList._id} title={todoList.title}/>)
         }
       </ScrollView>
     </Animated.View>
@@ -42,11 +43,14 @@ const styles = StyleSheet.create({
   },
   todoListLabelWrapper: {
     display: 'flex',
-    padding: 15
+    padding: 15,
+    borderBottomWidth: 2,
+    borderBottomColor: variables.colors.mid_grey,
+    marginBottom: 15
   },
   text: {
     fontSize: 27,
-    color: variables.colors.letter_color
+    color: variables.colors.red
   }
 });
 

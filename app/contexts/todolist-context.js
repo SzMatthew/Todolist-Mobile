@@ -6,7 +6,16 @@ const TodoListsContext = createContext();
 const todoListsReducer = (state, action) => {
   switch (action.type) {
     case 'SET_TODOLISTS': {
-      return { todoLists: action.payload };
+      return { 
+        todoLists: action.payload,
+        isTodoListPickerOpen: state.isTodolistPickerOpen
+      };
+    }
+    case 'SET_TODOLIST_PICKER_OPEN': {
+      return { 
+        todoLists: state.todoLists,
+        isTodoListPickerOpen: action.payload
+      };
     }
     default: {
       throw new Error(`Unsupported action type: ${action.type}`);
@@ -15,7 +24,7 @@ const todoListsReducer = (state, action) => {
 };
 
 const TodoListsProvider = props => {
-  const [state, dispatch] = useReducer(todoListsReducer, {todoLists: null});
+  const [state, dispatch] = useReducer(todoListsReducer, {todoLists: null, isTodoListPickerOpen: false});
   const value = useMemo(() => [state, dispatch], [state]);
   return <TodoListsContext.Provider value={value} {...props} />;
 };
@@ -39,11 +48,16 @@ const useTodoLists = () => {
     dispatch({type: 'SET_TODOLISTS', payload: todoLists});
   };
 
+  const setTodoListPickerOpen = (isOpen) => {
+    dispatch({type: 'SET_TODOLIST_PICKER_OPEN', payload: isOpen});
+  };
+
   return {
       state,
       dispatch,
       setTodoLists,
-      loadTodoLists
+      loadTodoLists,
+      setTodoListPickerOpen
   };
 };
 
