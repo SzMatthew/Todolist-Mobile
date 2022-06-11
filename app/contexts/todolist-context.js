@@ -8,13 +8,22 @@ const todoListsReducer = (state, action) => {
     case 'SET_TODOLISTS': {
       return { 
         todoLists: action.payload,
-        isTodoListPickerOpen: state.isTodolistPickerOpen
+        isTodoListPickerOpen: state.isTodolistPickerOpen,
+        isCreateNewListModalOpen: state.isCreateNewListModalOpen
       };
     }
     case 'SET_TODOLIST_PICKER_OPEN': {
       return { 
         todoLists: state.todoLists,
-        isTodoListPickerOpen: action.payload
+        isTodoListPickerOpen: action.payload,
+        isCreateNewListModalOpen: state.isCreateNewListModalOpen
+      };
+    }
+    case 'SET_CREATE_NEW_LIST_MODAL_OPEN': {
+      return {
+        todoLists: state.todoLists,
+        isTodoListPickerOpen: state.isTodoListPickerOpen,
+        isCreateNewListModalOpen: action.payload
       };
     }
     default: {
@@ -24,7 +33,7 @@ const todoListsReducer = (state, action) => {
 };
 
 const TodoListsProvider = props => {
-  const [state, dispatch] = useReducer(todoListsReducer, {todoLists: null, isTodoListPickerOpen: false});
+  const [state, dispatch] = useReducer(todoListsReducer, {todoLists: null, isTodoListPickerOpen: false, isCreateNewListModalOpen: false});
   const value = useMemo(() => [state, dispatch], [state]);
   return <TodoListsContext.Provider value={value} {...props} />;
 };
@@ -52,12 +61,17 @@ const useTodoLists = () => {
     dispatch({type: 'SET_TODOLIST_PICKER_OPEN', payload: isOpen});
   };
 
+  const setCreateNewListOpen = (isOpen) => {
+    dispatch({type: 'SET_CREATE_NEW_LIST_MODAL_OPEN', payload: isOpen});
+  };
+
   return {
       state,
       dispatch,
       setTodoLists,
       loadTodoLists,
-      setTodoListPickerOpen
+      setTodoListPickerOpen,
+      setCreateNewListOpen
   };
 };
 

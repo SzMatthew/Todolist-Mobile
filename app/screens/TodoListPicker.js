@@ -1,16 +1,17 @@
 import React from 'react';
-import { StyleSheet, View, Text, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Platform, StatusBar, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import Animated, {SlideInLeft, SlideOutLeft} from 'react-native-reanimated';
 import { AntDesign } from '@expo/vector-icons';
 import Project from './Project';
-import CreateListButton from './CreateListButton';
+import CreateNewListButton from './CreateListButton';
 import variables from './styles/Variables';
 import { useTodoLists } from '../contexts/todolist-context';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import CreateNewListModal from './CreateNewListModal';
 
 
 const TodoListPicker = () => {
-  const {state: {todoLists}, setTodoListPickerOpen} = useTodoLists();
+  const {state: {todoLists, isCreateNewListModalOpen}, setTodoListPickerOpen, setCreateNewListOpen} = useTodoLists();
 
   const onSwipeLeft = () => {
     setTodoListPickerOpen(false);
@@ -18,6 +19,7 @@ const TodoListPicker = () => {
 
   return (
     <Animated.View style={styles.todoListWrapper} entering={SlideInLeft} exiting={SlideOutLeft}>
+      <CreateNewListModal />
       <GestureRecognizer 
         style={{flex: 1}}
         onSwipeLeft={onSwipeLeft}
@@ -37,7 +39,7 @@ const TodoListPicker = () => {
             todoLists && todoLists.map(todoList => <Project key={todoList._id} id={todoList._id} title={todoList.title}/>)
           }
         </ScrollView>
-        <CreateListButton />
+        <CreateNewListButton />
       </GestureRecognizer>
     </Animated.View>
   )

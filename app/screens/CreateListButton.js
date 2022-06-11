@@ -1,10 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import variables from './styles/Variables';
+import { useTodoLists } from '../contexts/todolist-context';
 
-const CreateListButton = () => {
+
+const CreateNewListButton = () => {
+  const {setCreateNewListOpen} = useTodoLists();
+
   return (
-    <TouchableOpacity style={styles.buttonWrapper}>
+    <TouchableOpacity style={styles.buttonWrapper} onPress={() => setCreateNewListOpen(true)}>
       <Text style={styles.text}>Create New List</Text>
     </TouchableOpacity>
   )
@@ -24,4 +28,4 @@ const styles = StyleSheet.create({
     color: variables.colors.dark_grey
   }
 });
-export default CreateListButton
+export default CreateNewListButton
