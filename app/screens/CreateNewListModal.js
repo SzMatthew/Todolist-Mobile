@@ -10,6 +10,7 @@ const CreateNewListModal = () => {
 
   return (
     <Modal
+      animationType="slide"
       visible={isCreateNewListModalOpen}
     >
       <TouchableOpacity style={styles.closeIcon} onPress={() => setCreateNewListOpen(false)}>
