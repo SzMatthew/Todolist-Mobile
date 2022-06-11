@@ -16,7 +16,9 @@ const TodoListPicker = () => {
         <View style={styles.todoListLabelWrapper}>
           <Text style={styles.text}>Todo Lists:</Text>
         </View>
-        <AntDesign style={styles.closeIcon} name="close" size={24} color="white" onPress={() => setTodoListPickerOpen(false)}/>
+        <TouchableOpacity style={styles.closeIcon} onPress={() => setTodoListPickerOpen(false)}>
+          <AntDesign name="close" size={30} color={variables.colors.lightest_grey}/>
+        </TouchableOpacity>
         {
           todoLists && todoLists.map(todoList => <Project key={todoList._id} id={todoList._id} title={todoList.title}/>)
         }
@@ -38,8 +40,12 @@ const styles = StyleSheet.create({
   },
   closeIcon: {
     position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     right: 10,
     top: 20,
+    padding: 3,
   },
   todoListLabelWrapper: {
     display: 'flex',
@@ -49,7 +55,8 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   text: {
-    fontSize: 27,
+    fontSize: 30,
+    fontWeight: 'bold',
     color: variables.colors.red
   }
 });

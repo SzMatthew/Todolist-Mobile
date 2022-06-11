@@ -8,11 +8,9 @@ const SideNavButton = () => {
   const {setTodoListPickerOpen} = useTodoLists();
 
   return (
-    <TouchableOpacity onPress={() => setTodoListPickerOpen(true)}>
-      <View style={styles.todoListsWrapper}>
-        <Text style={styles.todoListsLabel}>Todo Lists</Text>
-        <AntDesign name="right" size={20} color={variables.colors.lightest_grey} />
-      </View>
+    <TouchableOpacity style={styles.todoListsWrapper} onPress={() => setTodoListPickerOpen(true)}>
+      <Text style={styles.todoListsLabel}>Todo Lists</Text>
+      <AntDesign name="right" size={22} color={variables.colors.lightest_grey} />
     </TouchableOpacity>
   )
 }
@@ -22,13 +20,14 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: 100,
-    marginHorizontal: 4
+    width: 110,
+    marginHorizontal: 4,
+    marginTop: 10
   },
   todoListsLabel: {
     color: variables.colors.lightest_grey,
     fontWeight: 'bold',
-    fontSize: 17,
+    fontSize: 20,
     marginRight: 2
   }
 });

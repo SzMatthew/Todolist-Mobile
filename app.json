@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "todolist",
-    "slug": "todolist",
+    "name": "Mate-Todolist",
+    "slug": "mate-todolist",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
@@ -28,6 +28,9 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "plugins": ["@react-native-google-signin/google-signin"]
+    "plugins": [
+      "@react-native-google-signin/google-signin"
+    ],
+    "description": ""
   }
 }

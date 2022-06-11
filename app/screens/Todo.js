@@ -49,11 +49,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     color: variables.colors.letter_color,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 19,
   },
   icon: {
-    width: 22,
-    height: 22,
+    width: 26,
+    height: 26,
     borderRadius: 7,
     borderWidth: 2,
     marginVertical: 3

@@ -24,22 +24,28 @@ const Todolist = () => {
   }, [todoLists]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={() => setTodoListPickerOpen(true)}/>
-      {
-        todoList && <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
-      }
-      {
-        todoList && todoList.todos.map(todo => <Todo key={todo._id} priority={todo.priority} text={todo.text} done={todo.done}/>)
-      }
-      { 
-        isTodoListPickerOpen && <TodoListPicker />
-      }
-    </SafeAreaView>
+    <View style={styles.background}>
+      <SafeAreaView style={styles.container}>
+        <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={() => setTodoListPickerOpen(true)}/>
+        {
+          todoList && <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
+        }
+        {
+          todoList && todoList.todos.map(todo => <Todo key={todo._id} priority={todo.priority} text={todo.text} done={todo.done}/>)
+        }
+        { 
+          isTodoListPickerOpen && <TodoListPicker />
+        }
+      </SafeAreaView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    backgroundColor: variables.colors.dark_grey
+  },
   container: {
     flex: 1,
     backgroundColor: variables.colors.dark_grey,
@@ -48,7 +54,7 @@ const styles = StyleSheet.create({
   },
   projectTitle: {
     marginVertical: 15,
-    fontSize: 25,
+    fontSize: 33,
     color: variables.colors.letter_color,
     fontWeight: 'bold',
     marginHorizontal: 5

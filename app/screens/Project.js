@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   title: {
     width: 300,
-    fontSize: 24,
+    fontSize: 30,
     color: variables.colors.letter_color,
     fontWeight: 'bold'
   }
