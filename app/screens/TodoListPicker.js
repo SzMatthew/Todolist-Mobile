@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Platform, StatusBar, ScrollView, TouchableOpaci
 import Animated, {SlideInLeft, SlideOutLeft} from 'react-native-reanimated';
 import { AntDesign } from '@expo/vector-icons';
 import Project from './Project';
+import CreateListButton from './CreateListButton';
 import variables from './styles/Variables';
 import { useTodoLists } from '../contexts/todolist-context';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -36,6 +37,7 @@ const TodoListPicker = () => {
             todoLists && todoLists.map(todoList => <Project key={todoList._id} id={todoList._id} title={todoList.title}/>)
           }
         </ScrollView>
+        <CreateListButton />
       </GestureRecognizer>
     </Animated.View>
   )
