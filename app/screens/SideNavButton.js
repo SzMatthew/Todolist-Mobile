@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 110,
     marginHorizontal: 4,
-    marginTop: 10
+    marginTop: 15
   },
   todoListsLabel: {
     color: variables.colors.lightest_grey,

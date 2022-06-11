@@ -6,6 +6,7 @@ import SideNavButton from './SideNavButton';
 import variables from './styles/Variables';
 import {useTodoLists} from '../contexts/todolist-context';
 import {useTodos} from '../contexts/todo-context';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const Todolist = () => {
   const {state: {todoLists, isTodoListPickerOpen}, loadTodoLists, setTodoListPickerOpen} = useTodoLists();
@@ -23,8 +24,19 @@ const Todolist = () => {
     }
   }, [todoLists]);
 
+  const onSwipeRight = () => {
+    setTodoListPickerOpen(true);
+  };
+
   return (
-    <View style={styles.background}>
+    <GestureRecognizer 
+      style={styles.background}
+      onSwipeRight={onSwipeRight}
+      config={{
+        velocityThreshold: 0.2,
+        directionalOffsetThreshold: 70
+      }}
+    >
       <SafeAreaView style={styles.container}>
         <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={() => setTodoListPickerOpen(true)}/>
         {
@@ -37,7 +49,7 @@ const Todolist = () => {
           isTodoListPickerOpen && <TodoListPicker />
         }
       </SafeAreaView>
-    </View>
+    </GestureRecognizer>
   )
 }
 
@@ -54,7 +66,7 @@ const styles = StyleSheet.create({
   },
   projectTitle: {
     marginVertical: 15,
-    fontSize: 33,
+    fontSize: 40,
     color: variables.colors.letter_color,
     fontWeight: 'bold',
     marginHorizontal: 5

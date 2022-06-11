@@ -1,28 +1,42 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
 import Animated, {SlideInLeft, SlideOutLeft} from 'react-native-reanimated';
 import { AntDesign } from '@expo/vector-icons';
 import Project from './Project';
 import variables from './styles/Variables';
 import { useTodoLists } from '../contexts/todolist-context';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 
 const TodoListPicker = () => {
   const {state: {todoLists}, setTodoListPickerOpen} = useTodoLists();
 
+  const onSwipeLeft = () => {
+    setTodoListPickerOpen(false);
+  };
+
   return (
     <Animated.View style={styles.todoListWrapper} entering={SlideInLeft} exiting={SlideOutLeft}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.todoListLabelWrapper}>
-          <Text style={styles.text}>Todo Lists:</Text>
-        </View>
-        <TouchableOpacity style={styles.closeIcon} onPress={() => setTodoListPickerOpen(false)}>
-          <AntDesign name="close" size={30} color={variables.colors.lightest_grey}/>
-        </TouchableOpacity>
-        {
-          todoLists && todoLists.map(todoList => <Project key={todoList._id} id={todoList._id} title={todoList.title}/>)
-        }
-      </ScrollView>
+      <GestureRecognizer 
+        style={{flex: 1}}
+        onSwipeLeft={onSwipeLeft}
+        config={{
+          velocityThreshold: 0.2,
+          directionalOffsetThreshold: 70
+        }}
+      >
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.todoListLabelWrapper}>
+            <Text style={styles.text}>Todo Lists:</Text>
+          </View>
+          <TouchableOpacity style={styles.closeIcon} onPress={() => setTodoListPickerOpen(false)}>
+            <AntDesign name="close" size={30} color={variables.colors.lightest_grey}/>
+          </TouchableOpacity>
+          {
+            todoLists && todoLists.map(todoList => <Project key={todoList._id} id={todoList._id} title={todoList.title}/>)
+          }
+        </ScrollView>
+      </GestureRecognizer>
     </Animated.View>
   )
 }
