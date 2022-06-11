@@ -1,7 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native';
 import Todolist from './app/screens/Todolist';
 import { TodoListsProvider } from './app/contexts/todolist-context';
 import { TodosProvider } from './app/contexts/todo-context';
+import variables from './app/screens/styles/Variables';
 
 
 export default function App() {
@@ -10,7 +11,7 @@ export default function App() {
     <TodoListsProvider>
       <TodosProvider>
         <Todolist/>
-        <StatusBar style="auto" />
+        <StatusBar backgroundColor={variables.colors.dark_grey} barStyle={'light-content'} />
       </TodosProvider>
     </TodoListsProvider>
   );

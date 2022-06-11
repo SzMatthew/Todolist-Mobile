@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
   todoListWrapper: {
     position: 'absolute',
     zIndex: 2,
-    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     backgroundColor: variables.colors.dark_grey,
     top: 0, bottom: 0, left: 0, right: 0
   },

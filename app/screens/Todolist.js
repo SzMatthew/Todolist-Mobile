@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar,  TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import Todo from './Todo';
 import TodoListPicker from './TodoListPicker';
 import SideNavButton from './SideNavButton';
@@ -37,7 +37,6 @@ const Todolist = () => {
         directionalOffsetThreshold: 70
       }}
     >
-      <StatusBar backgroundColor={variables.colors.dark_grey} barStyle={'light-content'} />
       <SafeAreaView style={styles.container}>
         <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={() => setTodoListPickerOpen(true)}/>
         {
@@ -62,7 +61,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: variables.colors.dark_grey,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     paddingHorizontal: 15,
   },
   projectTitle: {
