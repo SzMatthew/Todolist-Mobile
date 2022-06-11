@@ -37,6 +37,7 @@ const Todolist = () => {
         directionalOffsetThreshold: 70
       }}
     >
+      <StatusBar backgroundColor={variables.colors.dark_grey} barStyle={'light-content'} />
       <SafeAreaView style={styles.container}>
         <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={() => setTodoListPickerOpen(true)}/>
         {
