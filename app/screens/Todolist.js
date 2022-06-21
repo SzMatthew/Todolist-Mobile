@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import Todo from './Todo';
 import TodoListPicker from './TodoListPicker';
 import SideNavButton from './SideNavButton';
@@ -7,6 +7,7 @@ import variables from './styles/Variables';
 import {useTodoLists} from '../contexts/todolist-context';
 import {useTodos} from '../contexts/todo-context';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const Todolist = () => {
   const {state: {todoLists, isTodoListPickerOpen}, loadTodoLists, setTodoListPickerOpen} = useTodoLists();
@@ -37,18 +38,20 @@ const Todolist = () => {
         directionalOffsetThreshold: 70
       }}
     >
-      <SafeAreaView style={styles.container}>
-        <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={() => setTodoListPickerOpen(true)}/>
-        {
-          todoList && <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
-        }
-        {
-          todoList && todoList.todos.map(todo => <Todo key={todo._id} priority={todo.priority} text={todo.text} done={todo.done}/>)
-        }
-        { 
-          isTodoListPickerOpen && <TodoListPicker />
-        }
-      </SafeAreaView>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <SafeAreaView style={styles.container}>
+          <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={() => setTodoListPickerOpen(true)}/>
+          {
+            todoList && <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
+          }
+          {
+            todoList && todoList.todos.map(todo => <Todo key={todo._id} priority={todo.priority} text={todo.text} done={todo.done}/>)
+          }
+          { 
+            isTodoListPickerOpen && <TodoListPicker />
+          }
+        </SafeAreaView>
+      </GestureHandlerRootView>
     </GestureRecognizer>
   )
 }

@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { Keyboard, StyleSheet, View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useTodoLists } from '../contexts/todolist-context';
 import variables from './styles/Variables';
@@ -8,7 +8,6 @@ import variables from './styles/Variables';
 const CreateNewListModal = () => {
   const {state: { isCreateNewListModalOpen}, setCreateNewListOpen} = useTodoLists();
   const [newListName, setNewListName] = useState('');
-  const inputRef = useRef(null);
 
   const handleAddNewList = () => {
     setCreateNewListOpen(false);
@@ -34,7 +33,6 @@ const CreateNewListModal = () => {
           </TouchableOpacity>
           <Text style={styles.text}>New List:</Text>
           <TextInput
-            ref={inputRef}
             style={styles.input}
             value={newListName}
             onChangeText={setNewListName}
