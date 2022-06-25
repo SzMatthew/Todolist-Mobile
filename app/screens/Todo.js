@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { Animated, StyleSheet, View, Text } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { RectButton } from 'react-native-gesture-handler';
 import variables from './styles/Variables';
 
 const Todo = ({priority, text, done}) => {
@@ -24,16 +23,16 @@ const Todo = ({priority, text, done}) => {
         break;
     }
   }, []);
+
   const rightSwipeActions = () => {
     return (
-      <View
+      <Animated.View 
         style={styles.delete}
       >
         <AntDesign name="delete" size={22} color={variables.colors.letter_color} />
-      </View>
+      </Animated.View>
     );
   };
-
 
   return (
     <Swipeable
@@ -67,6 +66,7 @@ const styles = StyleSheet.create({
     color: variables.colors.letter_color,
     fontWeight: 'bold',
     fontSize: 19,
+    marginRight: 15
   },
   icon: {
     width: 26,

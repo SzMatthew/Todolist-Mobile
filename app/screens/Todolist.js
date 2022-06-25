@@ -1,17 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import Todo from './Todo';
 import TodoListPicker from './TodoListPicker';
 import SideNavButton from './SideNavButton';
 import variables from './styles/Variables';
 import {useTodoLists} from '../contexts/todolist-context';
 import {useTodos} from '../contexts/todo-context';
-import GestureRecognizer from 'react-native-swipe-gestures';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const Todolist = () => {
-  const {state: {todoLists, isTodoListPickerOpen}, loadTodoLists, setTodoListPickerOpen} = useTodoLists();
+  const {state: {todoLists}, loadTodoLists} = useTodoLists();
   const {state: {todoList}, loadTodoListById} = useTodos();
+  const swipeableRef = useRef(null);
 
   useEffect(() => {
     if (!todoLists) {
@@ -25,34 +26,29 @@ const Todolist = () => {
     }
   }, [todoLists]);
 
-  const onSwipeRight = () => {
-    setTodoListPickerOpen(true);
+  const leftSwipeActions = () => {
+    return (
+      <TodoListPicker swipeableRef={swipeableRef}/>
+    );
   };
 
   return (
-    <GestureRecognizer 
-      style={styles.background}
-      onSwipeRight={onSwipeRight}
-      config={{
-        velocityThreshold: 0.2,
-        directionalOffsetThreshold: 70
-      }}
-    >
-      <GestureHandlerRootView style={{flex: 1}}>
+    
+      <GestureHandlerRootView style={styles.background}>
         <SafeAreaView style={styles.container}>
-          <SideNavButton isTodoListPickerOpen={isTodoListPickerOpen} setTodoListPickerOpen={() => setTodoListPickerOpen(true)}/>
-          {
-            todoList && <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
-          }
-          {
-            todoList && todoList.todos.map(todo => <Todo key={todo._id} priority={todo.priority} text={todo.text} done={todo.done}/>)
-          }
-          { 
-            isTodoListPickerOpen && <TodoListPicker />
-          }
+          <Swipeable ref={swipeableRef} renderLeftActions={leftSwipeActions}>
+            <View style={styles.helper}>
+              <SideNavButton swipeableRef={swipeableRef} />
+              {
+                todoList && <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
+              }
+              {
+                todoList && todoList.todos.map(todo => <Todo key={todo._id} priority={todo.priority} text={todo.text} done={todo.done}/>)
+              }
+            </View>
+          </Swipeable>
         </SafeAreaView>
       </GestureHandlerRootView>
-    </GestureRecognizer>
   )
 }
 
@@ -64,7 +60,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: variables.colors.dark_grey,
-    paddingHorizontal: 15,
+  },
+  helper: {
+    paddingLeft: 15,
+    height: '100%',
+    backgroundColor: variables.colors.dark_grey,
   },
   projectTitle: {
     marginVertical: 15,

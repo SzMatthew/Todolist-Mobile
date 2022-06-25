@@ -6,33 +6,20 @@ import Project from './Project';
 import CreateNewListButton from './CreateListButton';
 import variables from './styles/Variables';
 import { useTodoLists } from '../contexts/todolist-context';
-import GestureRecognizer from 'react-native-swipe-gestures';
 import CreateNewListModal from './CreateNewListModal';
 
 
-const TodoListPicker = () => {
-  const {state: {todoLists, isCreateNewListModalOpen}, setTodoListPickerOpen, setCreateNewListOpen} = useTodoLists();
-
-  const onSwipeLeft = () => {
-    setTodoListPickerOpen(false);
-  };
+const TodoListPicker = ({swipeableRef}) => {
+  const {state: {todoLists}} = useTodoLists();
 
   return (
-    <Animated.View style={styles.todoListWrapper} entering={SlideInLeft} exiting={SlideOutLeft}>
+    <View style={styles.todoListWrapper}>
       <CreateNewListModal />
-      <GestureRecognizer 
-        style={{flex: 1}}
-        onSwipeLeft={onSwipeLeft}
-        config={{
-          velocityThreshold: 0.2,
-          directionalOffsetThreshold: 70
-        }}
-      >
         <ScrollView style={styles.scrollView}>
           <View style={styles.todoListLabelWrapper}>
             <Text style={styles.text}>Todo Lists:</Text>
           </View>
-          <TouchableOpacity style={styles.closeIcon} onPress={() => setTodoListPickerOpen(false)}>
+          <TouchableOpacity style={styles.closeIcon} onPress={() => swipeableRef.current.close()}>
             <AntDesign name="close" size={30} color={variables.colors.lightest_grey}/>
           </TouchableOpacity>
           {
@@ -40,17 +27,14 @@ const TodoListPicker = () => {
           }
         </ScrollView>
         <CreateNewListButton />
-      </GestureRecognizer>
-    </Animated.View>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   todoListWrapper: {
-    position: 'absolute',
-    zIndex: 2,
+    flex: 1,
     backgroundColor: variables.colors.dark_grey,
-    top: 0, bottom: 0, left: 0, right: 0
   },
   scrollView: {
     flex: 1,

@@ -2,13 +2,11 @@ import React from 'react';
 import { StyleSheet, View, Text,  TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import variables from './styles/Variables';
-import { useTodoLists } from '../contexts/todolist-context';
 
-const SideNavButton = () => {
-  const {setTodoListPickerOpen} = useTodoLists();
+const SideNavButton = ({swipeableRef}) => {
 
   return (
-    <TouchableOpacity style={styles.todoListsWrapper} onPress={() => setTodoListPickerOpen(true)}>
+    <TouchableOpacity style={styles.todoListsWrapper} onPress={() => swipeableRef.current.openLeft()}>
       <Text style={styles.todoListsLabel}>Todo Lists</Text>
       <AntDesign name="right" size={22} color={variables.colors.lightest_grey} />
     </TouchableOpacity>
