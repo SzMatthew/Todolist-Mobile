@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
 import Todo from './Todo';
 import TodoListPicker from './TodoListPicker';
 import SideNavButton from './SideNavButton';
@@ -43,7 +43,12 @@ const Todolist = () => {
                 todoList && <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
               }
               {
-                todoList && todoList.todos.map(todo => <Todo key={todo._id} priority={todo.priority} text={todo.text} done={todo.done}/>)
+                todoList 
+                && <FlatList
+                  data={todoList.todos}
+                  renderItem={({ item }) => <Todo priority={item.priority} text={item.text} done={item.done}/>}
+                  keyExtractor={(todo) => todo._id}
+                />
               }
             </View>
           </Swipeable>
