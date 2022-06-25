@@ -23,7 +23,7 @@ const TodoListPicker = ({swipeableRef}) => {
             <AntDesign name="close" size={30} color={variables.colors.lightest_grey}/>
           </TouchableOpacity>
           {
-            todoLists && todoLists.map(todoList => <Project key={todoList._id} id={todoList._id} title={todoList.title}/>)
+            todoLists && todoLists.map(todoList => <Project key={todoList._id} id={todoList._id} title={todoList.title} swipeableRef={swipeableRef}/>)
           }
         </ScrollView>
         <CreateNewListButton />

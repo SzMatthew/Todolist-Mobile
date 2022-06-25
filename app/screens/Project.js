@@ -1,17 +1,15 @@
 import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import variables from './styles/Variables';
 import { useTodos } from '../contexts/todo-context';
-import { useTodoLists } from '../contexts/todolist-context';
 
 
-const Project = ({id, title}) => {
+const Project = ({id, title, swipeableRef}) => {
   const { loadTodoListById } = useTodos();
-  const { setTodoListPickerOpen } = useTodoLists();
 
   const handleProjectPress = () => {
     loadTodoListById(id);
-    setTodoListPickerOpen(false);
+    swipeableRef.current.close();
   };
 
   return (
