@@ -34,7 +34,7 @@ const Todolist = () => {
   };
 
   const TodoList = () => {
-    if (todoLists) {
+    if (todoList) {
       return (
         <FlatList
           data={todoList.todos}
