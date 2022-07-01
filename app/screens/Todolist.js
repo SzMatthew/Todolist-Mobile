@@ -36,7 +36,7 @@ const Todolist = () => {
     
       <GestureHandlerRootView style={styles.background}>
         <SafeAreaView style={styles.container}>
-          <Swipeable ref={swipeableRef} renderLeftActions={leftSwipeActions}>
+          <Swipeable ref={swipeableRef} renderLeftActions={leftSwipeActions} leftThreshold={50}>
             <View style={styles.helper}>
               <SideNavButton swipeableRef={swipeableRef} />
               {

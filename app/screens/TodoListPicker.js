@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Platform, StatusBar, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, View, Text, Platform, FlatList, StatusBar, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import Animated, {SlideInLeft, SlideOutLeft} from 'react-native-reanimated';
 import { AntDesign } from '@expo/vector-icons';
 import Project from './Project';
@@ -23,7 +23,12 @@ const TodoListPicker = ({swipeableRef}) => {
             <AntDesign name="close" size={30} color={variables.colors.lightest_grey}/>
           </TouchableOpacity>
           {
-            todoLists && todoLists.map(todoList => <Project key={todoList._id} id={todoList._id} title={todoList.title} swipeableRef={swipeableRef}/>)
+            todoLists 
+            && <FlatList
+              data={todoLists}
+              renderItem={({ item }) => <Project key={item._id} id={item._id} title={item.title} swipeableRef={swipeableRef}/>}
+              keyExtractor={(todoList) => todoList._id}
+            />
           }
         </ScrollView>
         <CreateNewListButton />

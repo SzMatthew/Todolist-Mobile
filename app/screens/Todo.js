@@ -37,6 +37,7 @@ const Todo = ({priority, text, done}) => {
   return (
     <Swipeable
       renderRightActions={rightSwipeActions}
+      rightThreshold={50}
     >
       <View style={styles.todoWrapper} >
         <View style={[styles.icon, {borderColor: variables.colors[priorityColor]}]}></View>
