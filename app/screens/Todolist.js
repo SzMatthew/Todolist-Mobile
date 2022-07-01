@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, FlatList } from 'react-native';
 import Todo from './Todo';
 import TodoListPicker from './TodoListPicker';
 import SideNavButton from './SideNavButton';
+import Loading from './Loading';
 import variables from './styles/Variables';
 import {useTodoLists} from '../contexts/todolist-context';
 import {useTodos} from '../contexts/todo-context';
@@ -32,28 +33,36 @@ const Todolist = () => {
     );
   };
 
+  const TodoList = () => {
+    if (todoLists) {
+      return (
+        <FlatList
+          data={todoList.todos}
+          renderItem={
+            ({ item }) => <Todo priority={item.priority} text={item.text} done={item.done}/>
+          }
+          keyExtractor={(todo) => todo._id}
+          ListHeaderComponent={
+            () => <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
+          }
+        />
+      );
+    } else {
+      return <Loading />
+    }
+  };
+
   return (
-    
-      <GestureHandlerRootView style={styles.background}>
-        <SafeAreaView style={styles.container}>
-          <Swipeable ref={swipeableRef} renderLeftActions={leftSwipeActions} leftThreshold={50}>
-            <View style={styles.helper}>
-              <SideNavButton swipeableRef={swipeableRef} />
-              {
-                todoList && <Text style={styles.projectTitle}>{todoList.projectTitle}</Text>
-              }
-              {
-                todoList 
-                && <FlatList
-                  data={todoList.todos}
-                  renderItem={({ item }) => <Todo priority={item.priority} text={item.text} done={item.done}/>}
-                  keyExtractor={(todo) => todo._id}
-                />
-              }
-            </View>
-          </Swipeable>
-        </SafeAreaView>
-      </GestureHandlerRootView>
+    <GestureHandlerRootView style={styles.background}>
+      <SafeAreaView style={styles.container}>
+        <Swipeable ref={swipeableRef} renderLeftActions={leftSwipeActions} leftThreshold={50}>
+          <View style={styles.helper}>
+            <SideNavButton swipeableRef={swipeableRef} />
+            <TodoList/>
+          </View>
+        </Swipeable>
+      </SafeAreaView>
+    </GestureHandlerRootView>
   )
 }
 
