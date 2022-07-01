@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Keyboard, StyleSheet, View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
 import { useTodoLists } from '../contexts/todolist-context';
 import variables from './styles/Variables';
+import CloseIcon from './CloseIcon';
 
 
 const CreateNewListModal = () => {
@@ -28,10 +28,10 @@ const CreateNewListModal = () => {
     >
       <View style={styles.modalBackGround}>
         <View style={styles.modalView}>
-          <TouchableOpacity style={styles.closeIcon} onPress={() => setCreateNewListOpen(false)}>
-            <AntDesign name="close" size={30} color={variables.colors.lightest_grey}/>
-          </TouchableOpacity>
-          <Text style={styles.text}>New List:</Text>
+          <View style={styles.headerWrapper}>
+            <Text style={styles.text}>New TodoList:</Text>
+            <CloseIcon onPress={() => setCreateNewListOpen(false)} />
+          </View>
           <TextInput
             style={styles.input}
             value={newListName}
@@ -60,17 +60,15 @@ const styles = StyleSheet.create({
   modalView: {
     position: 'relative',
     padding: 20,
+    paddingTop: 15,
     backgroundColor: variables.colors.mid_grey,
     borderRadius: 20
   },
-  closeIcon: {
-    position: 'absolute',
+  headerWrapper: {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    right: 10,
-    top: 10,
-    padding: 3,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   text: {
     color: variables.colors.letter_color,
@@ -88,14 +86,15 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 20,
     paddingVertical: 5,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     marginVertical: 10
   },
   addNewListButton: {
     backgroundColor: variables.colors.red,
     padding: 10,
     alignItems: 'center',
-    borderRadius: 10
+    borderRadius: 10,
+    marginTop: 10
   },
   addNewText: {
     fontWeight: 'bold',

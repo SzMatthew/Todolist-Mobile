@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import Project from './Project';
+import CloseIcon from './CloseIcon';
 import CreateNewListButton from './CreateListButton';
 import variables from './styles/Variables';
 import { useTodoLists } from '../contexts/todolist-context';
@@ -11,12 +11,6 @@ import Loading from './Loading';
 
 const TodoListPicker = ({swipeableRef}) => {
   const {state: {todoLists}} = useTodoLists();
-
-  const CloseIcon = () => {
-    return <TouchableOpacity style={styles.closeIcon} onPress={() => swipeableRef.current.close()}>
-      <AntDesign name="close" size={30} color={variables.colors.lightest_grey}/>
-    </TouchableOpacity>
-  }; 
 
   const TodoLists = () => {
     if (todoLists) {
@@ -36,8 +30,9 @@ const TodoListPicker = ({swipeableRef}) => {
         <View style={styles.scrollView}>
           <View style={styles.todoListLabelWrapper}>
             <Text style={styles.text}>Todo Lists:</Text>
+            <CloseIcon onPress={() => swipeableRef.current.close()}/>
           </View>
-          <CloseIcon />
+          
           <TodoLists />
         </View>
         <CreateNewListButton />
@@ -53,21 +48,15 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-  closeIcon: {
-    position: 'absolute',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    right: 10,
-    top: 20,
-    padding: 3,
-  },
   todoListLabelWrapper: {
     display: 'flex',
     padding: 15,
     borderBottomWidth: 2,
     borderBottomColor: variables.colors.mid_grey,
-    marginBottom: 15
+    marginBottom: 15,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   text: {
     fontSize: 30,
