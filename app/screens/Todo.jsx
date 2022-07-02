@@ -26,11 +26,9 @@ const Todo = ({priority, text, done}) => {
 
   const rightSwipeActions = () => {
     return (
-      <Animated.View 
-        style={styles.delete}
-      >
+      <View style={styles.delete}>
         <AntDesign name="delete" size={22} color={variables.colors.letter_color} />
-      </Animated.View>
+      </View>
     );
   };
 

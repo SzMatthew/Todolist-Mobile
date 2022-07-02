@@ -9,6 +9,7 @@ import {useTodoLists} from '../contexts/todolist-context';
 import {useTodos} from '../contexts/todo-context';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import NoTodo from './NoTodo';
 
 const Todolist = () => {
   const {state: {todoLists}, loadTodoLists} = useTodoLists();
@@ -34,7 +35,9 @@ const Todolist = () => {
   };
 
   const TodoList = () => {
-    if (todoList) {
+    if (todoList?.todos?.length === 0) {
+      return <NoTodo />
+    } else if (todoList) {
       return (
         <FlatList
           data={todoList.todos}

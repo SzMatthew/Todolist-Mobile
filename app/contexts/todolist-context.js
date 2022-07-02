@@ -17,6 +17,12 @@ const todoListsReducer = (state, action) => {
         isCreateNewListModalOpen: action.payload
       };
     }
+    case 'CREATE_TODOLIST': {
+      return {
+        todoLists: [...state.todoLists, action.payload],
+        isCreateNewListModalOpen: state.isCreateNewListModalOpen
+      }
+    }
     default: {
       throw new Error(`Unsupported action type: ${action.type}`);
     }
@@ -52,12 +58,18 @@ const useTodoLists = () => {
     dispatch({type: 'SET_CREATE_NEW_LIST_MODAL_OPEN', payload: isOpen});
   };
 
+  const createTodoList = async (todoList) => {
+    const responseTodoList = await ApiCalls.createTodoList(todoList);
+    dispatch({type: 'CREATE_TODOLIST', payload: responseTodoList});
+  };
+
   return {
       state,
       dispatch,
       setTodoLists,
       loadTodoLists,
-      setCreateNewListOpen
+      setCreateNewListOpen,
+      createTodoList
   };
 };
 

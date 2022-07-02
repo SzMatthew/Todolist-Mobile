@@ -6,18 +6,12 @@ import CloseIcon from './CloseIcon';
 
 
 const CreateNewListModal = () => {
-  const {state: { isCreateNewListModalOpen}, setCreateNewListOpen} = useTodoLists();
+  const {state: { isCreateNewListModalOpen}, setCreateNewListOpen, createTodoList} = useTodoLists();
   const [newListName, setNewListName] = useState('');
 
   const handleAddNewList = () => {
     setCreateNewListOpen(false);
-    valiadteNewListName();
-  }
-
-  const valiadteNewListName = () => {
-    if (newListName.length === 0) {
-      console.log('NEM JOOo');
-    }
+    createTodoList(newListName);
   }
 
   return (
