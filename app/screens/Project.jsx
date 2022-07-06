@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   projectWrapper: {
     display: 'flex',
     alignItems: 'center',
+    paddingVertical: 7
   },
   title: {
     width: 300,

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import Project from './Project';
 import CloseIcon from './CloseIcon';
-import CreateNewListButton from './CreateListButton';
+import CreateNewListButton from './CreateNewListButton';
 import variables from './styles/Variables';
 import { useTodoLists } from '../contexts/todolist-context';
 import CreateNewListModal from './CreateNewListModal';

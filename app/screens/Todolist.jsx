@@ -10,6 +10,7 @@ import {useTodos} from '../contexts/todo-context';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import NoTodo from './NoTodo';
+import CreateTodoButton from './CreateTodoButton';
 
 const Todolist = () => {
   const {state: {todoLists}, loadTodoLists} = useTodoLists();
@@ -61,7 +62,8 @@ const Todolist = () => {
         <Swipeable ref={swipeableRef} renderLeftActions={leftSwipeActions} leftThreshold={50}>
           <View style={styles.helper}>
             <SideNavButton swipeableRef={swipeableRef} />
-            <TodoList/>
+            <TodoList />
+            <CreateTodoButton />
           </View>
         </Swipeable>
       </SafeAreaView>
