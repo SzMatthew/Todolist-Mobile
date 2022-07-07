@@ -8,6 +8,15 @@ const todosReducer = (state, action) => {
     case 'SET_TODOLIST': {
       return { todoList: action.payload };
     }
+    case 'ADD_TODO_TO_TODOLIST': {
+      return {
+        todoList: {
+          projectId: state.todoList.projectId,
+          projectTitle: state.todoList.projectTitle,
+          todos: [...state.todoList.todos, action.payload].sort((firstTodo, secondTodo) => (firstTodo.priority >= secondTodo.priority) ? 1 : -1)
+        }
+      };
+    }
     default: {
       throw new Error(`Unsupported action type: ${action.type}`);
     }
@@ -28,23 +37,21 @@ const useTodos = () => {
   }
   const [state, dispatch] = context;
 
-  const setTodos = todos => {
-    if (state.todos !== todos) {
-      dispatch({type: 'SET_TODOS', payload: todos});
-    }
-  };
-
   const loadTodoListById = async (todoListId) => {
     const todoList = await ApiCalls.getTodoListById(todoListId);
     todoList.todos = [...todoList.todos].sort((firstTodo, secondTodo) => (firstTodo.priority >= secondTodo.priority) ? 1 : -1);
     dispatch({type: 'SET_TODOLIST', payload: todoList});
   };
 
+  const appendTodoToTodoList = (todo) => {
+    dispatch({type: 'ADD_TODO_TO_TODOLIST', payload: todo});
+  };
+
   return {
       state,
       dispatch,
-      setTodos,
-      loadTodoListById
+      loadTodoListById,
+      appendTodoToTodoList
   };
 };
 

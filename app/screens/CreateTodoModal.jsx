@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Modal, Text, TextInput, TouchableOpacity } from 'react-native';
 import CloseIcon from './CloseIcon';
 import { Ionicons } from '@expo/vector-icons'; 
+import ApiCalls from '../utils/ApiCalls';
+import { useTodos } from '../contexts/todo-context';
 import variables from './styles/Variables';
 
 const CreateTodoModal = ({isOpen, setIsOpen}) => {
   const [text, setText] = useState('');
   const [priority, setPriority] = useState(3);
+  const { state: {todoList},  appendTodoToTodoList} = useTodos();
 
   const isPriorityIsActive = (checkPriority) => {
     if (checkPriority === priority) {
@@ -15,6 +18,16 @@ const CreateTodoModal = ({isOpen, setIsOpen}) => {
       };
     }
     return null;
+  };
+
+  const addTodo = async () => {
+    const todo = await ApiCalls.createTodo(todoList.projectId, text, priority);
+    if (todo._id) {
+      appendTodoToTodoList(todo);
+      setText('');
+      setPriority(3);
+      setIsOpen(false);
+    }
   };
 
   return (
@@ -44,6 +57,7 @@ const CreateTodoModal = ({isOpen, setIsOpen}) => {
           </View>
           <TouchableOpacity 
             style={styles.addButton}
+            onPress={addTodo}
           >
             <Text style={styles.addTodoText}>Add TODO</Text>
           </TouchableOpacity>
