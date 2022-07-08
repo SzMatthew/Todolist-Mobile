@@ -43,7 +43,7 @@ const Todolist = () => {
         <FlatList
           data={todoList.todos}
           renderItem={
-            ({ item }) => <Todo priority={item.priority} text={item.text} done={item.done}/>
+            ({ item }) => <Todo priority={item.priority} text={item.text} done={item.done} id={item._id}/>
           }
           keyExtractor={(todo) => todo._id}
           ListHeaderComponent={

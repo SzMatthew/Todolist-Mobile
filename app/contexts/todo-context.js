@@ -17,6 +17,22 @@ const todosReducer = (state, action) => {
         }
       };
     }
+    case 'REMOVE_TODO_FROM_TODOLIST': {
+      state.todoList.todos.forEach((item, index) => {
+        if (item._id === action.payload) {
+          state.todoList.todos.splice(index, 1);
+          return;
+        }
+      });
+
+      return {
+        todoList: {
+          projectId: state.todoList.projectId,
+          projectTitle: state.todoList.projectTitle,
+          todos: state.todoList.todos.sort((firstTodo, secondTodo) => (firstTodo.priority >= secondTodo.priority) ? 1 : -1)
+        }
+      }
+    }
     default: {
       throw new Error(`Unsupported action type: ${action.type}`);
     }
@@ -47,11 +63,16 @@ const useTodos = () => {
     dispatch({type: 'ADD_TODO_TO_TODOLIST', payload: todo});
   };
 
+  const deleteTodoFromTodoList = (id) => {
+    dispatch({type: 'REMOVE_TODO_FROM_TODOLIST', payload: id});
+  };
+
   return {
       state,
       dispatch,
       loadTodoListById,
-      appendTodoToTodoList
+      appendTodoToTodoList,
+      deleteTodoFromTodoList
   };
 };
 

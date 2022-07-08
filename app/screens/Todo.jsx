@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import { Animated, StyleSheet, View, Text } from 'react-native';
+import { Animated, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import variables from './styles/Variables';
+import ApiCalls from '../utils/ApiCalls';
+import { useTodos } from '../contexts/todo-context';
 
-const Todo = ({priority, text, done}) => {
+const Todo = ({priority, text, done, id}) => {
   const [priorityColor, setPriorityColor] = useState(null);
+  const {deleteTodoFromTodoList} = useTodos();
 
   useEffect(() => {
     switch(priority) {
@@ -24,11 +27,19 @@ const Todo = ({priority, text, done}) => {
     }
   }, []);
 
+  const deleteTodo = async () => {
+    const isSuccess = await ApiCalls.deleteTodo(id);
+    
+    if (isSuccess) {
+      deleteTodoFromTodoList(id);
+    }
+  };
+
   const rightSwipeActions = () => {
     return (
-      <View style={styles.delete}>
+      <TouchableOpacity style={styles.delete} onPress={deleteTodo}>
         <AntDesign name="delete" size={22} color={variables.colors.letter_color} />
-      </View>
+      </TouchableOpacity>
     );
   };
 

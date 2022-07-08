@@ -63,5 +63,19 @@ export default {
 
     const data = await response.json();
     return data;
-  }
+  },
+
+  deleteTodo: async (id) => {
+    const response = await fetch(`${envVariables.BACKEND_BASE_URL}/todos/${id}`, {
+      method: 'DELETE',
+      headers: {'Content-type': 'application/json'},
+    });
+
+    if (response.status >= 400 && response.status < 600) {
+      throw new Error("Bad response from server");
+    }
+
+    const data = await response.json();
+    return data;
+  },
 };
