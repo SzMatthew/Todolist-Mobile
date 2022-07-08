@@ -5,8 +5,10 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import variables from './styles/Variables';
 import ApiCalls from '../utils/ApiCalls';
 import { useTodos } from '../contexts/todo-context';
+import ConfirmationModal from './ConfirmationModal';
 
 const Todo = ({priority, text, done, id}) => {
+  const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [priorityColor, setPriorityColor] = useState(null);
   const {deleteTodoFromTodoList} = useTodos();
 
@@ -37,9 +39,18 @@ const Todo = ({priority, text, done, id}) => {
 
   const rightSwipeActions = () => {
     return (
-      <TouchableOpacity style={styles.delete} onPress={deleteTodo}>
-        <AntDesign name="delete" size={22} color={variables.colors.letter_color} />
-      </TouchableOpacity>
+      <>
+        <ConfirmationModal 
+          text='Are you sure you want to delete this TODO?' 
+          confirmationFunction={deleteTodo} 
+          isOpen={isDeleteConfirmationOpen} 
+          setIsOpen={setDeleteConfirmationOpen}
+        />
+        <TouchableOpacity style={styles.delete} onPress={() => setDeleteConfirmationOpen(true)}>
+          <AntDesign name="delete" size={22} color={variables.colors.letter_color} />
+        </TouchableOpacity>
+      </>
+      
     );
   };
 

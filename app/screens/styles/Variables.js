@@ -11,5 +11,4 @@ export default {
     grey: '#7F7F7F',
     dark_grey: '#1F1F1F',
   },
-  transition_time: '0.2s'
 };
