@@ -78,4 +78,19 @@ export default {
     const data = await response.json();
     return data;
   },
+
+  updateTodo: async (todo) => {
+    const response = await fetch(`${envVariables.BACKEND_BASE_URL}/todos`, {
+      method: 'PUT',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(todo)
+    });
+
+    if (response.status >= 400 && response.status < 600) {
+      throw new Error("Bad response from server");
+    }
+
+    const data = await response.json();
+    return data;
+  }
 };

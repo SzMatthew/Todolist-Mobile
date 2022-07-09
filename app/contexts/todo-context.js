@@ -33,6 +33,22 @@ const todosReducer = (state, action) => {
         }
       }
     }
+    case 'SET_TODO_DONE': {
+      state.todoList.todos.map((todo) => {
+        if (todo._id === id) {
+          todo.done = true;
+          return;
+        }
+      });
+
+      return {
+        todoList: {
+          projectId: state.todoList.projectId,
+          projectTitle: state.todoList.projectTitle,
+          todos: state.todoList.todos.sort((firstTodo, secondTodo) => (firstTodo.priority >= secondTodo.priority) ? 1 : -1)
+        }
+      };
+    }
     default: {
       throw new Error(`Unsupported action type: ${action.type}`);
     }
@@ -71,13 +87,33 @@ const useTodos = () => {
     dispatch({type: 'REMOVE_TODO_FROM_TODOLIST', payload: id});
   };
 
+  const setTodoDone = async (id) => {
+    let todoToUpdate = null;
+
+    state.todoList.todos.map((todo) => {
+      if (todo._id === id) {
+        todoToUpdate = todo;
+        todo.done = true;
+        return;
+      }
+    });
+
+    const updatedTodo = await ApiCalls.updateTodo(todoToUpdate);
+    if (updatedTodo._id) {
+      dispatch({type: 'SET_TODO_DONE', payload: id});
+    }else {
+      console.err('Couldn\'t update Todo!');
+    }
+  };
+
   return {
       state,
       dispatch,
       setTodoList,
       loadTodoListById,
       appendTodoToTodoList,
-      deleteTodoFromTodoList
+      deleteTodoFromTodoList,
+      setTodoDone
   };
 };
 

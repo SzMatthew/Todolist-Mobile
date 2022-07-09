@@ -10,7 +10,7 @@ import ConfirmationModal from './ConfirmationModal';
 const Todo = ({priority, text, done, id}) => {
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [priorityColor, setPriorityColor] = useState(null);
-  const {deleteTodoFromTodoList} = useTodos();
+  const {deleteTodoFromTodoList, setTodoDone} = useTodos();
 
   useEffect(() => {
     switch(priority) {
@@ -54,13 +54,19 @@ const Todo = ({priority, text, done, id}) => {
     );
   };
 
+  const handleDonePress = () => {
+    setTodoDone(id);
+  };
+
   return (
     <Swipeable
       renderRightActions={rightSwipeActions}
       rightThreshold={50}
     >
       <View style={styles.todoWrapper} >
-        <View style={[styles.icon, {borderColor: variables.colors[priorityColor]}]}></View>
+        <TouchableOpacity style={styles.iconWrapper} onPress={handleDonePress}>
+          <View style={[styles.icon, {borderColor: variables.colors[priorityColor]}]}></View>
+        </TouchableOpacity>
         <View style={styles.titleWrapper}>
           <Text style={styles.title}>{text}</Text>
         </View>
@@ -88,6 +94,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 19,
     marginRight: 15
+  },
+  iconWrapper: {
+    paddingHorizontal: 3
   },
   icon: {
     width: 26,

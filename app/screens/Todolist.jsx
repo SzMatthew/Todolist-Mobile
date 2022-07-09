@@ -41,7 +41,7 @@ const Todolist = () => {
     } else if (todoList) {
       return (
         <FlatList
-          data={todoList.todos}
+          data={todoList.todos.filter((todo) => todo.done === false)}
           renderItem={
             ({ item }) => <Todo priority={item.priority} text={item.text} done={item.done} id={item._id}/>
           }
