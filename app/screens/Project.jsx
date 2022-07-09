@@ -5,16 +5,24 @@ import { useTodos } from '../contexts/todo-context';
 
 
 const Project = ({id, title, swipeableRef}) => {
-  const { loadTodoListById } = useTodos();
+  const { state: {todoList}, loadTodoListById, setTodoList } = useTodos();
 
   const handleProjectPress = () => {
     loadTodoListById(id);
+    setTodoList(null);
     swipeableRef.current.close();
   };
 
+  const checkActiveTodolist = () => {
+    if (todoList && id === todoList.projectId) {
+      return {color: variables.colors.red}
+    }
+    return {color: variables.colors.letter_color};
+  }
+
   return (
     <TouchableOpacity style={styles.projectWrapper} onPress={handleProjectPress}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[checkActiveTodolist(), styles.title]}>{title}</Text>
     </TouchableOpacity>
   )
 }
@@ -28,7 +36,6 @@ const styles = StyleSheet.create({
   title: {
     width: 300,
     fontSize: 30,
-    color: variables.colors.letter_color,
     fontWeight: 'bold'
   }
 });

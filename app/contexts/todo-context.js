@@ -53,6 +53,10 @@ const useTodos = () => {
   }
   const [state, dispatch] = context;
 
+  const setTodoList = (todoList) => {
+    dispatch({type: 'SET_TODOLIST', payload: todoList});
+  };
+
   const loadTodoListById = async (todoListId) => {
     const todoList = await ApiCalls.getTodoListById(todoListId);
     todoList.todos = [...todoList.todos].sort((firstTodo, secondTodo) => (firstTodo.priority >= secondTodo.priority) ? 1 : -1);
@@ -70,6 +74,7 @@ const useTodos = () => {
   return {
       state,
       dispatch,
+      setTodoList,
       loadTodoListById,
       appendTodoToTodoList,
       deleteTodoFromTodoList

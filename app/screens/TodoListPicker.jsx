@@ -16,7 +16,7 @@ const TodoListPicker = ({swipeableRef}) => {
     if (todoLists) {
       return <FlatList
         data={todoLists}
-        renderItem={({ item }) => <Project key={item._id} id={item._id} title={item.title} swipeableRef={swipeableRef}/>}
+        renderItem={({ item }) => <Project id={item._id} title={item.title} swipeableRef={swipeableRef}/>}
         keyExtractor={(todoList) => todoList._id}
       />;
     } else {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: variables.colors.red
+    color: variables.colors.lightest_grey
   }
 });
 
