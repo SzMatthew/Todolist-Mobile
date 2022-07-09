@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
     backgroundColor: variables.colors.red,
     padding: 7,
     borderRadius: 30,
-    marginBottom: 15,
-    marginRight: 15
+    marginBottom: 25,
+    marginRight: 20
   }
 });
 
