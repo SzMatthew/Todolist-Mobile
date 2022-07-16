@@ -35,7 +35,7 @@ const todosReducer = (state, action) => {
     }
     case 'SET_TODO_DONE': {
       state.todoList.todos.map((todo) => {
-        if (todo._id === id) {
+        if (todo._id === action.payload) {
           todo.done = true;
           return;
         }

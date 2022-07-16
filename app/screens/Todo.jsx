@@ -6,6 +6,7 @@ import variables from './styles/Variables';
 import ApiCalls from '../utils/ApiCalls';
 import { useTodos } from '../contexts/todo-context';
 import ConfirmationModal from './ConfirmationModal';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 const Todo = ({priority, text, done, id}) => {
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
@@ -55,7 +56,10 @@ const Todo = ({priority, text, done, id}) => {
   };
 
   const handleDonePress = () => {
-    setTodoDone(id);
+    setTimeout(() => {
+      setTodoDone(id);
+    }, 300);
+    
   };
 
   return (
@@ -64,8 +68,16 @@ const Todo = ({priority, text, done, id}) => {
       rightThreshold={50}
     >
       <View style={styles.todoWrapper} >
+        
         <TouchableOpacity style={styles.iconWrapper} onPress={handleDonePress}>
-          <View style={[styles.icon, {borderColor: variables.colors[priorityColor]}]}></View>
+          <BouncyCheckbox
+            onPress={handleDonePress}
+            size={26}
+            iconStyle={[styles.icon, {borderColor: variables.colors[priorityColor]}]}
+            fillColor={variables.colors[priorityColor]}
+            bounceFriction={5}
+            disableText={true}
+          />
         </TouchableOpacity>
         <View style={styles.titleWrapper}>
           <Text style={styles.title}>{text}</Text>
@@ -78,10 +90,10 @@ const Todo = ({priority, text, done, id}) => {
 const styles = StyleSheet.create({
   todoWrapper: {
     display: 'flex',
-    flexDirection: 'row',
     padding: 5,
     marginVertical: 2,
     alignItems: 'center',
+    flexDirection: 'row'
   },
   titleWrapper: {
     flexDirection: 'row',
@@ -96,13 +108,14 @@ const styles = StyleSheet.create({
     marginRight: 15
   },
   iconWrapper: {
-    paddingHorizontal: 3
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 4,
   },
   icon: {
     width: 26,
     height: 26,
     borderRadius: 7,
-    borderWidth: 2,
     marginVertical: 3
   },
   delete: {

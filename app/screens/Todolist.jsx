@@ -36,9 +36,11 @@ const Todolist = () => {
   };
 
   const TodoList = () => {
-    if (todoList?.todos?.length === 0) {
+    const unDoneTodos = todoList?.todos?.filter(todo => todo.done === false);
+
+    if (unDoneTodos?.length === 0) {
       return <NoTodo />
-    } else if (todoList) {
+    } else if (unDoneTodos) {
       return (
         <FlatList
           data={todoList.todos.filter((todo) => todo.done === false)}
